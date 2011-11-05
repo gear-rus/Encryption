@@ -88,7 +88,7 @@ int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
 	}
 
 }
-void BSum(byte1* arr,int n1,byte2* keyword,int n2,bool mode)//mode=1 - minus
+void BSum(byte* arr,int n1,byte* keyword,int n2,bool mode)//mode=1 - minus
 {
 	if (mode) mode=-1;
 		else mode=1;
