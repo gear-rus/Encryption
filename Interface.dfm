@@ -2137,7 +2137,7 @@ object CryptWindow: TCryptWindow
   object Elapsed: TLabel
     Left = 8
     Top = 188
-    Width = 244
+    Width = 3
     Height = 13
   end
   object GroupBox1: TGroupBox

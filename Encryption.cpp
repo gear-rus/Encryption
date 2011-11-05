@@ -2,7 +2,6 @@
 
 #include <vcl.h>
 #pragma hdrstop
-//#include <stdio.h>
 #include <tchar.h>
 // ---------------------------------------------------------------------------
 USEFORM("Interface.cpp", CryptWindow);

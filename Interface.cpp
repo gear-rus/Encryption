@@ -1,9 +1,7 @@
 // ---------------------------------------------------------------------------
 
 #include <vcl.h>
-// #include <stdio.h>
 #pragma hdrstop
-
 #include "Interface.h"
 #include "Processing.h"
 #include <time.h>
@@ -14,7 +12,7 @@
 TCryptWindow *CryptWindow;
 FILE *input = NULL, *output = NULL;
 MD5 md5;
-int size = 0, nArgs, mode=1;
+int size = 0, nArgs, mode = 1;
 wchar_t** args = CommandLineToArgvW(GetCommandLineW(), &nArgs);
 int buffersize = MAX_B;
 
@@ -54,17 +52,9 @@ void __fastcall TCryptWindow::Pwd1Change(TObject *Sender) {
 
 // ---------------------------------------------------------------------------
 void __fastcall TCryptWindow::Button1Click(TObject *Sender) {
-	/* char* sdf = "dsf hk.enc";
-	 ShowMessage(UnicodeString(fileN(*sdf))); */
-	// for (int i = 0; i < 10; i++) {
-	// byte*	x = new byte[1024 * 1000];
-	// memset(x, 1, 1024*1000);
-	// }
-	// this->OpWindow->ShowModal();
 	char* filename = "D:\\Program Files\\LOLZ\\pizdec.tmp";
-
 	ShowMessage(UnicodeString(strrchr(filename, '\\') + 1));
-	// ShowMessage(UnicodeString(properSize()));
+
 }
 // ---------------------------------------------------------------------------
 
@@ -86,7 +76,6 @@ void __fastcall TCryptWindow::PathExit(TObject *Sender) {
 // ---------------------------------------------------------------------------
 
 void __fastcall TCryptWindow::PathKeyPress(TObject *Sender, wchar_t &Key) {
-	// ShowMessage(UnicodeString(Key));
 	if (Key == 0xD)
 		PathExit(NULL);
 }
@@ -100,22 +89,20 @@ void __fastcall TCryptWindow::AlgDropDown(TObject *Sender) {
 void __fastcall TCryptWindow::Button2Click(TObject *Sender) {
 	clock_t start = clock();
 	md5alg(1024, "D:\MaxNoobMagom.7z", "lolwut", "D:\\1.enc", 1);
-
-	// ShowMessage(UnicodeString(sizeof(int))+UnicodeString(sizeof(char)));
 }
 // ---------------------------------------------------------------------------
 
 void __fastcall TCryptWindow::GoClick(TObject *Sender) {
-	 if (!Encrypt->Checked)
-	   mode=0;
-	   else
-	   mode=1;
-
+	if (!Encrypt->Checked)
+		mode = 0;
+	else
+		mode = 1;
 	clock_t start = clock();
 	switch (Alg->ItemIndex) {
 	case 0:
 		md5alg(5*1024*1024, AnsiString(Path->Text).c_str(),
-			AnsiString(Pwd2->Text).c_str(), AnsiString(Path->Text).c_str(), mode);
+			AnsiString(Pwd2->Text).c_str(),
+			AnsiString(Path->Text).c_str(), mode);
 		Elapsed->Caption =
 			("Time elapsed: " + UnicodeString(((double)clock() - start)
 			/ CLOCKS_PER_SEC) + " s");
