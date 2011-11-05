@@ -8,14 +8,11 @@
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-#define MAX_B 5120
 TCryptWindow *CryptWindow;
 FILE *input = NULL, *output = NULL;
 MD5 md5;
 int size = 0, nArgs, mode = 1;
 wchar_t** args = CommandLineToArgvW(GetCommandLineW(), &nArgs);
-int buffersize = MAX_B;
-
 // ---------------------------------------------------------------------------
 __fastcall TCryptWindow::TCryptWindow(TComponent* Owner) : TForm(Owner) {
 

@@ -12,6 +12,7 @@ WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	try {
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
+		Application->Title = "Built by Gear and Crazymax";
 		Application->CreateForm(__classid(TCryptWindow), &CryptWindow);
 		Application->CreateForm(__classid(TOpWindow), &OpWindow);
         void* Op = OpWindow;
