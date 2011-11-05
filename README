@@ -2,7 +2,7 @@ Software is distributed under "Do what the fuck you want" license (AS-IS)
 //----------------------------------
 Up next:
 1: Add 1 byte for automatic hash type ident
-2: properSize function does not work right =\
+2: properSize function does not work right =\ - FIXED
 3: Decryption for md5
 Ideas:
 1: double(triple?) buffering
