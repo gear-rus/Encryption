@@ -88,3 +88,10 @@ int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
 	}
 
 }
+void BSum(byte1* arr,int n1,byte2* keyword,int n2,bool mode)//mode=1 - minus
+{
+	if (mode) mode=-1;
+		else mode=1;
+	for(int i=0,j=0;;i<n1;i++,j++)
+	byte1[i]=(256+byte1[i]+mode*byte2[j%16])%256;
+}
