@@ -13,6 +13,7 @@ FILE *input = NULL, *output = NULL;
 MD5 md5;
 int size = 0, nArgs, mode = 1;
 wchar_t** args = CommandLineToArgvW(GetCommandLineW(), &nArgs);
+
 // ---------------------------------------------------------------------------
 __fastcall TCryptWindow::TCryptWindow(TComponent* Owner) : TForm(Owner) {
 
@@ -67,29 +68,29 @@ void __fastcall TCryptWindow::PathExit(TObject *Sender) {
 	fseek(input, 0, SEEK_SET);
 	fclose(input);
 	Finfo->Caption = UnicodeString(size) + " bytes(OK)";
-	Finfo->Caption = properSize(size);
+	Finfo->Caption = properSize(size) + " (" + UnicodeString(size) + " Bytes)";
 
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TCryptWindow::PathKeyPress(TObject *Sender, wchar_t &Key) {
+void __fastcall TCryptWindow::PathKeyPress(TObject * Sender, wchar_t &Key) {
 	if (Key == 0xD)
 		PathExit(NULL);
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TCryptWindow::AlgDropDown(TObject *Sender) {
+void __fastcall TCryptWindow::AlgDropDown(TObject * Sender) {
 	Alg->Perform(CB_SETDROPPEDWIDTH, 110, 0);
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TCryptWindow::Button2Click(TObject *Sender) {
+void __fastcall TCryptWindow::Button2Click(TObject * Sender) {
 	clock_t start = clock();
 	md5alg(1024, "D:\MaxNoobMagom.7z", "lolwut", "D:\\1.enc", 1);
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TCryptWindow::GoClick(TObject *Sender) {
+void __fastcall TCryptWindow::GoClick(TObject * Sender) {
 	if (!Encrypt->Checked)
 		mode = 0;
 	else
@@ -97,7 +98,7 @@ void __fastcall TCryptWindow::GoClick(TObject *Sender) {
 	clock_t start = clock();
 	switch (Alg->ItemIndex) {
 	case 0:
-		md5alg(5*1024*1024, AnsiString(Path->Text).c_str(),
+		md5alg(5 * 1024 * 1024, AnsiString(Path->Text).c_str(),
 			AnsiString(Pwd2->Text).c_str(),
 			AnsiString(Path->Text).c_str(), mode);
 		Elapsed->Caption =

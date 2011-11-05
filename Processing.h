@@ -1,21 +1,24 @@
 #include "md5.h"
 
 UnicodeString properSize(int size) {
-	UnicodeString out = "";
-	int cur;
-	if (cur = size / (1024 * 1024 * 1024)) {
-		out = out + cur + "," + (size / (1024 * 1024)) + " GB";
-		return out;
+	double size2 = size;
+	int k = 0;
+	for (; size2 > 1024; size2 = size2 / 1024, k++);
+	size2 = double(int(size2 * 100)) / 100;
+	switch (k) {
+	case 0:
+		return (UnicodeString(size2) + " Bytes");
+	case 1:
+		return (UnicodeString(size2) + " KiB");
+	case 2:
+		return (UnicodeString(size2) + " MiB");
+	case 3:
+		return (UnicodeString(size2) + " GiB");
+	case 4:
+		return (UnicodeString(size2) + " TiB");
+	default:
+		return (UnicodeString(size2) + " >TiB");
 	}
-	if (cur = size / (1024 * 1024)) {
-		out = out + cur + "," + (size / 1024) + " MB";
-		return out;
-	}
-	if (cur = size / (1024)) {
-		out = out + cur + "," + (size % 1024) + " Bytes";
-		return out;
-	}
-
 }
 
 char* fileN(char& in) {
