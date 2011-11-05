@@ -44,7 +44,8 @@ int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
 			return 2;
 		byte* buffer = new byte[buffsize];
 		char* cipher;
-		int hash, k = 0, marker = 0;
+		int hash, k = 0;
+		short marker = 0, algindex = 1;
 		char part[3];
 		int readL = fread(buffer, 1, strlen(pwd) * 10, input);
 		cipher = md5.digestMemory(buffer, readL);
@@ -67,7 +68,8 @@ int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
 			i++;
 		}
 		marker += 4;
-		fwrite(&marker, 4, 1, output);
+		fwrite(&algindex, 2, 1, output);
+		fwrite(&marker, 2, 1, output);
 		fwrite(buffer, strlen(cipher) / 2, 1, output);
 		fwrite(namebuff, k, 1, output);
 		fseek(input, 0, SEEK_SET);

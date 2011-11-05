@@ -52,6 +52,7 @@ void __fastcall TCryptWindow::Pwd1Change(TObject *Sender) {
 void __fastcall TCryptWindow::Button1Click(TObject *Sender) {
 	char* filename = "D:\\Program Files\\LOLZ\\pizdec.tmp";
 	ShowMessage(UnicodeString(strrchr(filename, '\\') + 1));
+	ShowMessage(UnicodeString(sizeof(short)));
 
 }
 // ---------------------------------------------------------------------------
