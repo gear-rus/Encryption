@@ -2,7 +2,7 @@ object OpWindow: TOpWindow
   Left = 0
   Top = 0
   Caption = 'Operation:'
-  ClientHeight = 123
+  ClientHeight = 150
   ClientWidth = 457
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -2128,11 +2128,27 @@ object OpWindow: TOpWindow
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object CurrentOP: TLabel
+    Left = 9
+    Top = 8
+    Width = 51
+    Height = 13
+    Caption = 'CurrentOP'
+  end
   object PB: TProgressBar
     Left = 8
-    Top = 79
+    Top = 107
     Width = 440
     Height = 35
     TabOrder = 0
+    Visible = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 9
+    Top = 88
+    Width = 440
+    Height = 13
+    TabOrder = 1
+    Visible = False
   end
 end

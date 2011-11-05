@@ -1,5 +1,23 @@
 #include "md5.h"
 
+UnicodeString properSize(int size) {
+	UnicodeString out = "";
+	int cur;
+	if (cur = size / (1024 * 1024 * 1024)) {
+		out = out + cur + "," + (size / (1024 * 1024)) + " GB";
+		return out;
+	}
+	if (cur = size / (1024 * 1024)) {
+		out = out + cur + "," + (size / 1024) + " MB";
+		return out;
+	}
+	if (cur = size / (1024)) {
+		out = out + cur + "," + (size % 1024) + " Bytes";
+		return out;
+	}
+
+}
+
 char* fileN(char& in) {
 	char* buff = new char[strlen(&in)];
 	if (!strstr(&in, ".enc"))
@@ -22,66 +40,91 @@ int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
 		if (!(output = fopen((AnsiString(out) + ".enc").c_str(), "w+b")))
 			return 2;
 		byte* buffer = new byte[buffsize];
-		byte* littlebuff = new byte;
 		char* cipher;
-		int hash, k = 0, len = 0;
+		int hash, k = 0, marker = 0;
 		char part[3];
-		int headL = fread(buffer, 1, strlen(pwd) * 10, input);
-		delete cipher;
-		cipher = md5.digestMemory(buffer, headL);
+		int readL = fread(buffer, 1, strlen(pwd) * 10, input);
+		cipher = md5.digestMemory(buffer, readL);
 		for (int i = 0; i < strlen(cipher); i += 2) {
 			buffer[i / 2] =
 				byte(strtol((strncpy(part, cipher + i, 2)), NULL, 16) % 256);
+			marker++;
 		}
-		fwrite(buffer, strlen(cipher) / 2, 1, output);
 		cipher = md5.digestString(pwd);
-		delete buffer, littlebuff, cipher;
+		k = strlen(strrchr(in, '\\') + 1);
+		byte* namebuff = new byte[k];
+		strcpy(namebuff, strrchr(in, '\\') + 1);
+		for (int i = 0, j = 0; i < k;) {
+			namebuff[i] =
+				byte((strtol((strncpy(part, cipher + j, 2)), NULL,
+				16) + namebuff[i]) % 256);
+			marker++;
+			j = j % 32;
+			j += 2;
+			i++;
+		}
+		marker += 4;
+		fwrite(&marker, 4, 1, output);
+		fwrite(buffer, strlen(cipher) / 2, 1, output);
+		fwrite(namebuff, k, 1, output);
+		fseek(input, 0, SEEK_SET);
+		while (!feof(input)) {
+			readL = fread(buffer, 1, buffsize, input);
+			for (int i = 0, j = 0; i < readL; i++) {
+				buffer[i] =
+					byte((buffer[i] + strtol((strncpy(part, cipher + j, 2)),
+					NULL, 16)) % 256);
+				j = j % 32;
+				j += 2;
+				i++;
+			}
+			fwrite(buffer, 1, readL, output);
+		}
 		fclose(output);
-		fclose(input);
 		return 0;
 	}
 
-	/*
-	 out = fileN(*out);
-	 FILE *input, *output;
-	 if (!(input = fopen(AnsiString(in).c_str(), "r+b")))
-	 return 1;
-	 if (!(output = fopen((AnsiString(out)+".enc").c_str(), "w+b")))
-	 return 2;
-
-	 byte* buffer = new byte[MAX_B];
-	 byte* littlebuff = new byte;
-	 char* cipher;
-	 int hash, k = 0, len = 0;
-	 char part[3];
-	 int headL = fread(buffer, 1, strlen(pwd) * 10, input);
-	 cipher = md5.digestMemory(buffer, headL);
-	 // int a = MAX_B  ;
-	 for (int i = 0; i < strlen(cipher); i += 2) {
-	/*	stringstream convert(strncpy(part, cipher + i, 2));
-	 convert >> std::hex >> hash;
-	 buffer[i / 2] = byte(hash % 256);
-	 //	= *littlebuff;
-	 buffer[i/2]=byte(strtol((strncpy(part, cipher + i, 2)),NULL, 16)%256);
-	 }
-	 fwrite(buffer,strlen(cipher)/2,1,output);
-	 cipher = md5.digestString(pwd);
-
-	/*	while (!feof(input)) {
-	 if (k >= StrLen(cipher))
-	 k = 0;
-	 fread(buff, 1, 1, input);
-	 stringstream convert(strncpy(part, cipher + k, 2));
-	 convert >> std::hex >> hash;
-	 *buff = byte((*buff + hash) % 256);
-	 fwrite(buff, 1, 1, output);
-
-	 k += 2;
-
-	 return 0;
-	 }
-	 fclose(output);
-	 fclose(input);
-	 */
-
 }
+
+/*
+ out = fileN(*out);
+ FILE *input, *output;
+ if (!(input = fopen(AnsiString(in).c_str(), "r+b")))
+ return 1;
+ if (!(output = fopen((AnsiString(out)+".enc").c_str(), "w+b")))
+ return 2;
+
+ byte* buffer = new byte[MAX_B];
+ byte* littlebuff = new byte;
+ char* cipher;
+ int hash, k = 0, len = 0;
+ char part[3];
+ int headL = fread(buffer, 1, strlen(pwd) * 10, input);
+ cipher = md5.digestMemory(buffer, headL);
+ // int a = MAX_B  ;
+ for (int i = 0; i < strlen(cipher); i += 2) {
+/*	stringstream convert(strncpy(part, cipher + i, 2));
+ convert >> std::hex >> hash;
+ buffer[i / 2] = byte(hash % 256);
+ //	= *littlebuff;
+ buffer[i/2]=byte(strtol((strncpy(part, cipher + i, 2)),NULL, 16)%256);
+ }
+ fwrite(buffer,strlen(cipher)/2,1,output);
+ cipher = md5.digestString(pwd);
+
+/*	while (!feof(input)) {
+ if (k >= StrLen(cipher))
+ k = 0;
+ fread(buff, 1, 1, input);
+ stringstream convert(strncpy(part, cipher + k, 2));
+ convert >> std::hex >> hash;
+ *buff = byte((*buff + hash) % 256);
+ fwrite(buff, 1, 1, output);
+
+ k += 2;
+
+ return 0;
+ }
+ fclose(output);
+ fclose(input);
+ */

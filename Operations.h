@@ -13,6 +13,8 @@ class TOpWindow : public TForm
 {
 __published:	// IDE-managed Components
 	TProgressBar *PB;
+	TProgressBar *ProgressBar1;
+	TLabel *CurrentOP;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TOpWindow(TComponent* Owner);

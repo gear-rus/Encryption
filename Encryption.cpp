@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 USEFORM("Interface.cpp", CryptWindow);
 USEFORM("Operations.cpp", OpWindow);
+
 //---------------------------------------------------------------------------
 WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	try {
@@ -14,7 +15,9 @@ WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 		Application->MainFormOnTaskBar = true;
 		Application->CreateForm(__classid(TCryptWindow), &CryptWindow);
 		Application->CreateForm(__classid(TOpWindow), &OpWindow);
+        void* Op = OpWindow;
 		Application->Run();
+
 	}
 	catch (Exception &exception) {
 		Application->ShowException(&exception);

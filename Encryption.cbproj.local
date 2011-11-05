@@ -3,8 +3,8 @@
 	<Transactions>
     <Transaction>1899.12.30 00:00:00.000.015,D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.dfm=D:\DropBox\Dropbox\Public\C++\Ciphering\Interface.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.421,D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Operations.h</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.812,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.cpp=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.203,=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.812,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.cpp=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.926,D:\DropBox\Dropbox\Public\C++\Ciphering\md5.hh=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.734,D:\DropBox\Dropbox\Public\C++\Ciphering\111.cpp=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.140,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.dfm=D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.dfm</Transaction>
@@ -20,24 +20,24 @@
     <Transaction>1899.12.30 00:00:00.000.812,D:\DropBox\Dropbox\Public\C++\Ciphering\111.h=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.988,=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.cc</Transaction>
     <Transaction>1899.12.30 00:00:00.000.531,D:\DropBox\Dropbox\Public\C++\Ciphering\Unit1.dfm=D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.296,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Processing.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.531,D:\DropBox\Dropbox\Public\C++\Ciphering\Unit1.cpp=D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.296,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.171,=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.062,=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.562,=D:\DropBox\Dropbox\Public\C++\Ciphering\Unit1.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.140,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.cpp=D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.cpp</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.734,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\MD5crypt.cbproj=D:\DropBox\Dropbox\Public\C++\Ciphering\MD5crypt.cbproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.140,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.421,D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.cpp=D:\DropBox\Dropbox\Public\C++\Ciphering\Operations.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.140,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.734,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\MD5crypt.cbproj=D:\DropBox\Dropbox\Public\C++\Ciphering\MD5crypt.cbproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.843,=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.859,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Unit1.dfm=C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.062,D:\DropBox\Dropbox\Public\C++\Ciphering\md5.h=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.781,D:\DropBox\Dropbox\Public\C++\Ciphering\md6.h=D:\DropBox\Dropbox\Public\C++\Ciphering\md5.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.176,D:\DropBox\Dropbox\Public\C++\Ciphering\MD5crypt.cbproj=D:\DropBox\Dropbox\Public\C++\Ciphering\Encryption.cbproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.531,D:\DropBox\Dropbox\Public\C++\Ciphering\Unit1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.h</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.218,=C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Project1.res</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.968,D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Processing.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.859,C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Unit1.h=C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Encrypt.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.218,=C:\Documents and Settings\1\Мои документы\RAD Studio\Projects\Project1.res</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.062,=D:\DropBox\Dropbox\Public\C++\Ciphering\File1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.531,D:\DropBox\Dropbox\Public\C++\Ciphering\Unit1.h=D:\DropBox\Dropbox\Public\C++\Ciphering\OpWindow.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.015,D:\DropBox\Dropbox\Public\C++\Ciphering\Encrypt.h=D:\DropBox\Dropbox\Public\C++\Ciphering\Interface.h</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
