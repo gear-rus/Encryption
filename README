@@ -1,16 +1,13 @@
-Software is distributed under "Do what the fuck you want" license (AS-IS)
-//----------------------------------
-Up next:
-1: Add 1 byte for automatic hash type ident - FIXED
-2: properSize function does not work right =\ - FIXED
-3: Decryption for md5 - WIP
-Ideas:
-1: double(triple?) buffering
-2: multiple hashing algorithms
-3: separate thread for encryption
-4: options window
-5: stop being noob (optional) and understand how md5 works
-6: start using dynamical forms
-7: add batch processing
-8: ???
-9: PROFIT!!!
+<<<<<<<<<<<<<You can find the latest stable release binary in /Release/Win32/ dir of this repo>>>>>>>>>>>>>>>>>>>
+
+This software is free an OpenSource, you can redistribute and use it the way you like!
+But you should not, under any circumstance re-license it and apply any licenses other than this one.
+==============================================
+This is a learning project! Me and my friend use it to learn new stuff. 
+It is updated every time we learn something interesting or applicable.
+==============================================
+This is an encryption program. It can be used to encrypts files with a password using
+an MD5 algorithm and a simple byte-shift. It is a multi-threaded app with a gui.
+This program, of course, is not bug free and you should ALWAYS MAKE A BACKUP of a data
+you put through it. 
+We use bcc32 compiler and Builder IDE by Embarcadero.
