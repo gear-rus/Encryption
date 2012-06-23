@@ -1,20 +1,32 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
 			<ProjectGuid>{9E21E0E9-DF8A-4A85-953A-376AE8E7BC1E}</ProjectGuid>
-			<ProjectVersion>12.3</ProjectVersion>
+			<ProjectVersion>13.4</ProjectVersion>
 			<MainSource>Encryption.cpp</MainSource>
 			<Base>True</Base>
-			<Config Condition="'$(Config)'==''">Debug</Config>
-			<Platform>Win32</Platform>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<AppType>Application</AppType>
 			<FrameworkType>VCL</FrameworkType>
+			<Platform Condition="'$(Platform)'==''">Win32</Platform>
+			<TargetedPlatforms>1</TargetedPlatforms>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
 			<Cfg_1>true</Cfg_1>
 			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+			<Cfg_1_Win32>true</Cfg_1_Win32>
+			<CfgParent>Cfg_1</CfgParent>
+			<Cfg_1>true</Cfg_1>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
@@ -23,15 +35,21 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<ILINK_LibraryPath>..\MD5 ne norm - копия\;..\Encryption\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+			<IncludePath>..\MD5 ne norm - копия\;..\Encryption\;$(IncludePath)</IncludePath>
+			<VCL_Custom_Styles>&quot;Carbon|VCLSTYLE|$(PUBLIC)\Documents\RAD Studio\9.0\Styles\Carbon.vsf&quot;</VCL_Custom_Styles>
+			<UsingDelphiRTL>true</UsingDelphiRTL>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
+			<VerInfo_Locale>1049</VerInfo_Locale>
 			<LinkPackageStatics>rtl.lib;vcl.lib</LinkPackageStatics>
 			<OutputExt>exe</OutputExt>
-			<PackageImports>rtl.bpi;vcl.bpi;bcbie.bpi;xmlrtl.bpi;vclactnband.bpi;vclx.bpi;bcbsmp.bpi;svnui.bpi;svn.bpi;bdertl.bpi;TeeUI.bpi;TeeDB.bpi;Tee.bpi;vclimg.bpi;vcldb.bpi;dbrtl.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_110_150.bpi;Intraweb_110_150.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DataSnapClient.bpi;dbxcds.bpi;DbxClientDriver.bpi;DataSnapServer.bpi;AzureCloud.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi</PackageImports>
+			<PackageImports>rtl.bpi;vcl.bpi;bcbie.bpi;xmlrtl.bpi;vclactnband.bpi;vclx.bpi;bcbsmp.bpi;svnui.bpi;svn.bpi;bdertl.bpi;TeeUI.bpi;TeeDB.bpi;Tee.bpi;vclimg.bpi;vcldb.bpi;dbrtl.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_110_150.bpi;Intraweb_110_150.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DataSnapClient.bpi;dbxcds.bpi;DbxClientDriver.bpi;DataSnapServer.bpi;AzureCloud.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;$(PackageImports)</PackageImports>
 			<Multithreaded>true</Multithreaded>
 			<_TCHARMapping>wchar_t</_TCHARMapping>
 			<AllPackageLibs>rtl.lib;vcl.lib</AllPackageLibs>
 			<ProjectType>CppVCLApplication</ProjectType>
 			<DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
-			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE</DCC_UnitAlias>
 			<DynamicRTL>true</DynamicRTL>
 			<IntermediateOutputDir>.\$(Config)\$(Platform)</IntermediateOutputDir>
 			<FinalOutputDir>.\$(Config)\$(Platform)</FinalOutputDir>
@@ -39,6 +57,15 @@
 			<BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
 			<BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
 			<ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<Icon_MainIcon>Encryption_Icon.ico</Icon_MainIcon>
+			<DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -58,12 +85,22 @@
 			<ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
 			<ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
 		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
 			<DynamicRTL>false</DynamicRTL>
 			<Defines>NDEBUG;$(Defines)</Defines>
 			<TASM_Debugging>None</TASM_Debugging>
 		</PropertyGroup>
 		<ItemGroup>
+			<CppCompile Include="Credits.cpp">
+				<Form>CreditsForm</Form>
+				<FormType>dfm</FormType>
+				<DependentOn>Credits.h</DependentOn>
+				<BuildOrder>6</BuildOrder>
+			</CppCompile>
 			<CppCompile Include="Encryption.cpp">
 				<BuildOrder>0</BuildOrder>
 			</CppCompile>
@@ -73,21 +110,23 @@
 			<CppCompile Include="Interface.cpp">
 				<Form>CryptWindow</Form>
 				<DependentOn>Interface.h</DependentOn>
-				<BuildOrder>2</BuildOrder>
+				<BuildOrder>6</BuildOrder>
 			</CppCompile>
 			<None Include="md5.h">
 				<BuildOrder>5</BuildOrder>
 			</None>
-			<CppCompile Include="Operations.cpp">
+			<CppCompile Include="Operation.cpp">
 				<Form>OpWindow</Form>
-				<DependentOn>Operations.h</DependentOn>
-				<BuildOrder>4</BuildOrder>
+				<FormType>dfm</FormType>
+				<DependentOn>Operation.h</DependentOn>
+				<BuildOrder>5</BuildOrder>
 			</CppCompile>
 			<None Include="Processing.h">
 				<BuildOrder>5</BuildOrder>
 			</None>
-			<FormResources Include="Operations.dfm"/>
+			<FormResources Include="Operation.dfm"/>
 			<FormResources Include="Interface.dfm"/>
+			<FormResources Include="Credits.dfm"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -144,8 +183,8 @@
 					</Source>
 					<Parameters/>
 					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k150.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp150.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
 					</Excluded_Packages>
 				</CPlusPlusBuilder.Personality>
 				<Platforms>
@@ -155,4 +194,5 @@
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
 	</Project>

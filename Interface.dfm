@@ -1,9 +1,11 @@
 object CryptWindow: TCryptWindow
-  Left = 0
-  Top = 0
+  Left = 27
+  Top = 81
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'File encryption'
-  ClientHeight = 227
-  ClientWidth = 482
+  ClientHeight = 219
+  ClientWidth = 485
   Color = clBtnFace
   Font.Charset = RUSSIAN_CHARSET
   Font.Color = clWindowText
@@ -2126,37 +2128,42 @@ object CryptWindow: TCryptWindow
     FFFEE000000001E3FFFFFFFFFFFFFFFFFFFFF0000000C1FFFFFFFFFFFFFFFFFF
     FFFFF86040C0E1FFFFFFFFFFFFFFFFFFFFFFFDE0E0E1F3FFFFFFFFFFFFFF}
   OldCreateOrder = False
+  Position = poDesigned
+  Visible = True
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object Finfo: TLabel
     Left = 185
     Top = 38
-    Width = 3
+    Width = 36
     Height = 13
+    Caption = 'No file'
   end
-  object Elapsed: TLabel
-    Left = 8
-    Top = 188
-    Width = 3
-    Height = 13
+  object Label1: TLabel
+    Left = 474
+    Top = 207
+    Width = 8
+    Height = 16
+    Caption = '?'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Fixedsys'
+    Font.Style = []
+    ParentFont = False
+    OnClick = Label1Click
   end
   object GroupBox1: TGroupBox
     Left = 8
     Top = 94
-    Width = 244
-    Height = 88
+    Width = 171
+    Height = 86
     Caption = 'Actions'
     TabOrder = 2
-    object ActionLabel: TLabel
-      Left = 90
-      Top = 11
-      Width = 35
-      Height = 13
-      Caption = 'Using:'
-    end
     object Decrypt: TRadioButton
       Left = 15
-      Top = 56
+      Top = 50
       Width = 65
       Height = 21
       Caption = 'Decrypt'
@@ -2164,7 +2171,7 @@ object CryptWindow: TCryptWindow
     end
     object Encrypt: TRadioButton
       Left = 15
-      Top = 26
+      Top = 18
       Width = 65
       Height = 21
       Caption = 'Encrypt'
@@ -2172,28 +2179,11 @@ object CryptWindow: TCryptWindow
       TabOrder = 1
       TabStop = True
     end
-    object Alg: TComboBox
-      Left = 90
-      Top = 26
-      Width = 77
-      Height = 21
-      Style = csDropDownList
-      ItemIndex = 0
-      MaxLength = 40
-      TabOrder = 2
-      Text = 'MD5'
-      OnDropDown = AlgDropDown
-      Items.Strings = (
-        'MD5'
-        'Not available yet..'
-        'Not available yet..'
-        'Not available yet..')
-    end
     object Go: TButton
-      Left = 174
-      Top = 26
-      Width = 60
-      Height = 51
+      Left = 85
+      Top = 15
+      Width = 79
+      Height = 62
       Caption = 'Start!'
       Enabled = False
       Font.Charset = RUSSIAN_CHARSET
@@ -2202,7 +2192,7 @@ object CryptWindow: TCryptWindow
       Font.Name = 'Droid'
       Font.Style = []
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 2
       OnClick = GoClick
     end
   end
@@ -2220,6 +2210,7 @@ object CryptWindow: TCryptWindow
     ParentFont = False
     TabOrder = 0
     Text = 'File name (and path) here...'
+    OnClick = PathClick
     OnExit = PathExit
     OnKeyPress = PathKeyPress
   end
@@ -2239,10 +2230,10 @@ object CryptWindow: TCryptWindow
     OnClick = SearchClick
   end
   object GroupBox2: TGroupBox
-    Left = 274
-    Top = 64
-    Width = 193
-    Height = 118
+    Left = 222
+    Top = 61
+    Width = 246
+    Height = 119
     Caption = 'Encryption/decryption key'
     TabOrder = 3
     object EnterP: TLabel
@@ -2268,42 +2259,44 @@ object CryptWindow: TCryptWindow
     object Pwd1: TEdit
       Left = 9
       Top = 31
-      Width = 174
+      Width = 222
       Height = 21
-      PasswordChar = '#'
+      PasswordChar = '*'
       TabOrder = 0
       OnChange = Pwd1Change
     end
     object Pwd2: TEdit
       Left = 9
-      Top = 69
-      Width = 174
+      Top = 72
+      Width = 222
       Height = 21
-      PasswordChar = '#'
+      PasswordChar = '*'
       TabOrder = 1
       OnChange = Pwd1Change
     end
   end
-  object Button1: TButton
-    Left = 258
-    Top = 188
-    Width = 70
-    Height = 24
-    Caption = 'Button1'
+  object activeOps: TComboBox
+    Left = 8
+    Top = 186
+    Width = 459
+    Height = 21
+    Style = csDropDownList
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Droid'
+    Font.Style = []
+    ItemIndex = 0
+    ParentFont = False
     TabOrder = 4
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 334
-    Top = 188
-    Width = 75
-    Height = 25
-    Caption = 'Button2'
-    TabOrder = 5
-    OnClick = Button2Click
+    Text = 'Active operations - 0'
+    OnCloseUp = activeOpsCloseUp
+    OnDropDown = activeOpsDropDown
+    Items.Strings = (
+      'Active operations - 0')
   end
   object SD: TSaveDialog
-    Filter = 'Encypted File (*.gear)|*.*'
+    Filter = 'Encypted File (*.crypt)|*.*'
     Options = [ofOverwritePrompt, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofForceShowHidden]
     Left = 400
     Top = 8

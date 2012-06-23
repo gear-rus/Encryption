@@ -1,21 +1,35 @@
 // ---------------------------------------------------------------------------
-
+
 #include <vcl.h>
 #pragma hdrstop
 #include <tchar.h>
 // ---------------------------------------------------------------------------
-USEFORM("Interface.cpp", CryptWindow);
-USEFORM("Operations.cpp", OpWindow);
 
+#include <Vcl.Styles.hpp>
+#include <Vcl.Themes.hpp>
+
+
+
+
+
+
+
+
+
+USEFORM("Operation.cpp", OpWindow);
+USEFORM("Interface.cpp", CryptWindow);
+USEFORM("Credits.cpp", CreditsForm);
 //---------------------------------------------------------------------------
 WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	try {
 		Application->Initialize();
-		Application->MainFormOnTaskBar = true;
-		Application->Title = "Built by Gear and Crazymax";
+		Application->ShowMainForm = 0;
+		// Application->MainFormOnTaskBar = true;
+		TStyleManager::TrySetStyle("Carbon");
+		Application->Title = "Encryption";
+		Application->CreateForm(__classid(TCreditsForm), &CreditsForm);
 		Application->CreateForm(__classid(TCryptWindow), &CryptWindow);
-		Application->CreateForm(__classid(TOpWindow), &OpWindow);
-        Application->Run();
+		Application->Run();
 
 	}
 	catch (Exception &exception) {
@@ -32,3 +46,4 @@ WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	return 0;
 }
 // ---------------------------------------------------------------------------
+

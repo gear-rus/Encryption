@@ -1,8 +1,14 @@
 #include "md5.h"
-bool md5encrypt(char *in,char* out,int N,byte pwdhash[16],int buf);
-int CheckFile(char* filename,char* pwd);
+#include "time.h"
+#define BUFF (16*8*1024)
+#define UPD_OP (WM_APP+1)
 
-UnicodeString properSize(int size) {
+struct feedback {
+	void* destination;
+	long int progress;
+};
+
+UnicodeString properSize(long int size) {
 	double size2 = size;
 	int k = 0;
 	for (; size2 > 1024; size2 = size2 / 1024, k++);
@@ -21,157 +27,189 @@ UnicodeString properSize(int size) {
 	default:
 		return (UnicodeString(size2) + " >TiB");
 	}
+
 }
 
-char* fileN(char& in) {
-	char* buff = new char[strlen(&in)];
-	if (!strstr(&in, ".enc"))
-		return &in;
-	int pos = (int)(strstr(&in, ".enc") - &in);
-	strncpy(buff, &in, pos);
-	strcpy(&in, buff);
-	*(&in + pos) = '\0';
-	delete[]buff;
-	return &in;
+struct encParam {
+	int length; // длина
+	byte* data;
+	byte* keyword;
+};
+
+byte* KeySum(byte* data, byte* keyword, int len1, int len2) {
+	for (int i = 0; i < len1; i++) {
+		data[i] = (data[i] + keyword[i % len2]) % 256;
+	}
+	return data;
 }
 
-int md5alg(int buffsize, char* in, char* pwd, char* out, int mode) {
+byte* KeyMinus(byte* data, byte* keyword, int len1, int len2) {
+	for (int i = 0; i < len1; i++) {
+		data[i] = (256 + data[i] - keyword[i % len2]) % 256;
+	}
+	return data;
+}
+
+DWORD CALLBACK encThr(void* input) {
+	encParam* data = (encParam*)input;
+	KeySum(data->data, data->keyword, data->length, 16);
+	delete data;
+	return 0;
+}
+
+DWORD CALLBACK decThr(void* input) {
+	encParam* data = (encParam*)input;
+	KeyMinus(data->data, data->keyword, data->length, 16);
+	delete data;
+	return 0;
+}
+
+byte* hashPass(char* pwd) {
+	// algoritm 1:md5
+	char* cipher;
 	MD5 md5;
-	if (mode) {
-		out = fileN(*out);
-		FILE *input, *output;
-		if (!(input = fopen(AnsiString(in).c_str(), "r+b")))
-			return 1;
-		if (!(output = fopen((AnsiString(out) + ".enc").c_str(), "w+b")))
-			return 2;
-		byte* buffer = new byte[buffsize];
-		char* cipher;
-		int hash, k = 0;
-		short marker = 0, algindex = 1;
-		char part[3];
-		int readL = fread(buffer, 1, strlen(pwd) * 10, input);
-		cipher = md5.digestMemory(buffer, readL);
-		for (int i = 0; i < strlen(cipher); i += 2) {
-			buffer[i / 2] =
-				byte(strtol((strncpy(part, cipher + i, 2)), NULL, 16) % 256);
-			marker++;
-		}
-		cipher = md5.digestString(pwd);
-		k = strlen(strrchr(in, '\\') + 1);
-		byte* namebuff = new byte[k];
-		strcpy(namebuff, strrchr(in, '\\') + 1);
-		for (int i = 0, j = 0; i < k;) {
-			namebuff[i] =
-				byte((strtol((strncpy(part, cipher + j, 2)), NULL,
-				16) + namebuff[i]) % 256);
-			marker++;
-			j = j % 32;
-			j += 2;
-			i++;
-		}
-		marker += 4;
-		fwrite(&algindex, 2, 1, output);
-		fwrite(&marker, 2, 1, output);
-		fwrite(buffer, strlen(cipher) / 2, 1, output);
-		fwrite(namebuff, k, 1, output);
-		fseek(input, 0, SEEK_SET);
-		while (!feof(input)) {
-			readL = fread(buffer, 1, buffsize, input);
-			for (int i = 0, j = 0; i < readL; i++) {
-				buffer[i] =
-					byte((buffer[i] + strtol((strncpy(part, cipher + j, 2)),
-					NULL, 16)) % 256);
-				j = j % 32;
-				j += 2;
-				i++;
-			}
-			fwrite(buffer, 1, readL, output);
-		}
-		fclose(output);
-		return 0;
-	}//nahooj ety sistemy :D
-	else
-	CheckFile(in,pwd);
-
-}
-void BSum(byte* arr,int n1,byte* keyword,int n2,bool mode)//mode=1 - minus
-{
-	if (mode) mode=-1;
-		else mode=1;
-	for(int i=0,j=0;i<n1;i++,j++)
-	arr[i]=(256+arr[i]+mode*keyword[j%n2])%256;
-}
-int CheckFile(char* filename,char* pwd)
-{
-	MD5 md5;
+	byte* keyword = new byte[16];
 	char part[3];
-	FILE*in=fopen(filename,"rb");
-	short marker;
-	fread(&marker,1,2,in);//alg
-	switch (marker) {
-	case 1:                               //md5 alg
-	{
-	byte filehash[16];
-	char* charnfhash;
-	byte nfilehash[16];
-	byte* memory=new byte[strlen(pwd)*10];
-	char* nfname;//new filename
-	int len=strlen(pwd);
-	pwd=md5.digestString(pwd);//md5hash pwd
-	byte pwdhash[16];
-	for (int i = 0, j = 0; i < 16; i++) { //pasha's code
-				pwdhash[i] =                 //i hope it converts 32 char(pwd) to 16 byte(pwdhash)
-					byte((pwdhash[i] + strtol((strncpy(part, pwd + j, 2)),
-					NULL, 16)) % 256);
-				j = j % 32;
-				j += 2;
-				i++;
-	}            //end pasha's block
-	fread(&marker,1,2,in);//length
-	fread(filehash,16,1,in);//hash
-	fread(nfname,marker-2-2-16,1,in);
-	fread(memory,len*10,1,in);
-	charnfhash=md5.digestMemory(memory, len*10);
-	for (int i = 0, j = 0; i < 16; i++) { //pasha's code
-				nfilehash[i] =                 //i hope it converts 32 char(pwd) to 16 byte(pwdhash)
-					byte((nfilehash[i] + strtol((strncpy(part, charnfhash + j, 2)),
-					NULL, 16)) % 256);
-				j = j % 32;
-				j += 2;
-				i++;
-	}            //end pasha's block
-	int i;
-	for(i=0;(i<16)&&(filehash[i]==nfilehash[i]);i++);
-	if (i==16){
-	fclose(in);
-	for(int i=0,j=0;i<strlen(nfname);i++,j++)
-		nfname[i]=(256+nfname[i]-pwdhash[j%16])%256;
-	md5encrypt(filename,nfname,marker,pwdhash,1024*1024*5);//5MB
-	return 0;
+	// keyword =
+	cipher = md5.digestString(pwd);
+	// 31 - max index md5hash
+	for (int i = 0; i < 31; i += 2) {
+		keyword[i / 2] = (byte)(strtol((strncpy(part, cipher + i, 2)), NULL,
+			16) % 256);
 	}
-	return 1;
-	}
-	default:return 0;
-		;
-	}  //idk why it returns alg :O
-
+	return keyword;
 
 }
-bool md5encrypt(char *in,char* out,int N,byte pwdhash[16],int buf)
-{
-	FILE*inf=fopen(in,"rb");
-	FILE*outf=fopen(out,"wb");
-	byte* buffer=new byte[buf];
-	fseek(inf,N,SEEK_SET);//+N byte
-	int L;
-	while (!feof(inf))
-		{
-			L=fread(buffer,buf,1,inf);
-			for(int i=0,j=0;i<L;i++,j=(j+1)%16)
-				buffer[i]=(256+buffer[i]-pwdhash[j])%256;
-			fwrite(buffer,L,1,outf);
+
+char *GetFileName(char *path) {
+	char *filename = strrchr(path, '\\');
+	if (filename == NULL)
+		filename = path;
+	else
+		filename++;
+	return filename;
+}
+
+char *GetFilePath(char *path) {
+	char *filename = strrchr(path, '\\');
+	if (filename == NULL)
+		filename = path;
+	else
+		filename++;
+	filename[0] = 0;
+	return path;
+}
+
+int encrypt(char* fin, char* fout, char* pwd, feedback* link) {
+	FILE* in = fopen(fin, "rb");
+	FILE* out = fopen(fout, "wb");
+	if (!in) {
+		return 1;
+	}
+	if (!out) {
+		return 2;
+	}
+
+	byte* passHash = hashPass(pwd);
+	byte* buffer = new byte[BUFF];
+	char* newfname = GetFileName(fin);
+	int lennewfname = strlen(newfname) + 1;
+	newfname = KeySum(newfname, passHash, lennewfname, 16);
+	fwrite(&lennewfname, 4, 1, out);
+	fwrite(newfname, 1, lennewfname, out);
+	// HANDLE thr1, thr2, thr3, thr4, thr5, thr6, thr7, thr8;
+	HANDLE main[8]; // = {thr1, thr2, thr3, thr4, thr5, thr6, thr7, thr8};
+	fseek(in, 0, SEEK_END);
+	int size = ftell(in);
+	fseek(in, 0, SEEK_SET);
+	int cycles = size / (BUFF) + !(!(size % (BUFF)));
+	int done = 0;
+	int spare = size % BUFF;
+	encParam* encData;
+	clock_t begin = clock();
+	for (int i = 0; i < cycles; i++) {
+		done = i;
+		int l = 0, L = 0;
+		for (int k = 0; k < 8; k++) {
+			l = fread(buffer + (BUFF / 8) * k, 1, BUFF / 8, in);
+			encData = new encParam;
+			encData->length = l;
+			encData->data = buffer + (BUFF / 8) * k;
+			encData->keyword = passHash;
+			main[k] = CreateThread(0, 0, encThr, encData, 0, 0);
+			L += l;
 		}
-	fclose(inf);
-	fclose(outf);
+		WaitForMultipleObjects(8, main, TRUE, INFINITE);
+		fwrite(buffer, 1, L, out);
+		if ((((double)clock() - begin) / CLOCKS_PER_SEC > 0.3) ||
+			(done == cycles-1)) {
+			begin = clock();
+			link->progress = ftell(in);
+			PostMessage(((HWND)(link->destination)), UPD_OP,
+				(unsigned int)link, 0);
+		}
+	}
+	fclose(in);
+	fclose(out);
 	return 0;
 }
+
+int decrypt(char* fin, char* path, char* pwd, feedback* link) {
+	FILE* in = fopen(fin, "rb");
+
+	if (!in) {
+		return 1;
+	}
+
+	byte* passHash = hashPass(pwd);
+	byte* buffer = new byte[BUFF];
+	int lennewfname;
+	fread(&lennewfname, 1, 4, in);
+	char* newfname = new char[lennewfname];
+	fread(newfname, 1, lennewfname, in);
+	newfname = KeyMinus(newfname, passHash, lennewfname, 16);
+	char* fout = new char[lennewfname + strlen(path)];
+	fout = strcat(path, newfname);
+	FILE* out = fopen(fout, "wb");
+	if (!out) {
+		return 2;
+	}
+	// HANDLE thr1, thr2, thr3, thr4, thr5, thr6, thr7, thr8;
+	HANDLE main[8]; // = {thr1, thr2, thr3, thr4, thr5, thr6, thr7, thr8};
+	int pos = ftell(in);
+	fseek(in, 0, SEEK_END);
+	int size = ftell(in) - pos;
+	fseek(in, pos, SEEK_SET);
+	int cycles = size / (BUFF) + !(!(size % (BUFF)));
+	int done = 0;
+	int spare = size % BUFF;
+	encParam* encData;
+	clock_t begin = clock();
+	for (int i = 0; i < cycles; i++) {
+		done = i;
+		int l = 0, L = 0;
+		for (int k = 0; k < 8; k++) {
+			l = fread(buffer + (BUFF / 8) * k, 1, BUFF / 8, in);
+			encData = new encParam;
+			encData->length = l;
+			encData->data = buffer + (BUFF / 8) * k;
+			encData->keyword = passHash;
+			main[k] = CreateThread(0, 0, decThr, encData, 0, 0);
+			L += l;
+		}
+		WaitForMultipleObjects(8, main, TRUE, INFINITE);
+		fwrite(buffer, 1, L, out);
+		if ((((double)clock() - begin) / CLOCKS_PER_SEC > 0.3) ||
+			(done == cycles-1)) {
+			begin = clock();
+			link->progress = ftell(in);
+			PostMessage(((HWND)(link->destination)), UPD_OP,
+				(unsigned int)link, 0);
+		}
+	}
+	fclose(in);
+	fclose(out);
+	return 0;
+}
+
+// ---------------------------------------------------------------------------
